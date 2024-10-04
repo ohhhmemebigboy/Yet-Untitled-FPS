@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Player_Stats" load_steps=2 format=3 uid="uid://bls8g6sdod2sy"]
+
+[ext_resource type="Script" path="res://scripts/Resources/Player_Stats.gd" id="1_ogq42"]
+
+[resource]
+script = ExtResource("1_ogq42")
+current_pistol_ammo = 0
+max_pistol_ammo = 20
+health = 0
+max_health = 100
+pistol_damage = 10
