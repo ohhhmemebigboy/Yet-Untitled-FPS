@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3vlsk0oymaqs"]
+
+[ext_resource type="PackedScene" uid="uid://drkl7ithot7qk" path="res://scenes/testScene.tscn" id="2_awivg"]
+[ext_resource type="PackedScene" uid="uid://dllmhiipnfkop" path="res://scenes/test_item.tscn" id="3_omx4l"]
+[ext_resource type="PackedScene" uid="uid://cbuprxji0bugj" path="res://scenes/stock_enemy.tscn" id="3_ywhwp"]
+[ext_resource type="Resource" uid="uid://ck7caj51gh64l" path="res://scripts/Item Scripts/test_item_stats.tres" id="4_mv6yc"]
+
+[sub_resource type="Environment" id="Environment_ga1fc"]
+
+[node name="main" type="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.142732, 0.989761, 0, -0.989761, 0.142732, 0, 9.04256, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ga1fc")
+
+[node name="streets2" parent="." instance=ExtResource("2_awivg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4268, -2.58189, 8.95434)
+
+[node name="StockEnemy" parent="." instance=ExtResource("3_ywhwp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+
+[node name="test_item" parent="." instance=ExtResource("3_omx4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8398, -1.40124, -2.52008)
+item_stats = ExtResource("4_mv6yc")
+
+[node name="test_item2" parent="." instance=ExtResource("3_omx4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9665, -1.11682, -5.04016)
+item_stats = ExtResource("4_mv6yc")
+
+[node name="test_item3" parent="." instance=ExtResource("3_omx4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.206, -1.82434, 0.278321)
+item_stats = ExtResource("4_mv6yc")

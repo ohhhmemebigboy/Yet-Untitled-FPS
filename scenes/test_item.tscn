@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3 uid="uid://dllmhiipnfkop"]
+
+[ext_resource type="Script" path="res://scripts/Item Scripts/itemscript.gd" id="1_05lp4"]
+[ext_resource type="Script" path="res://scripts/Item Scripts/item_stats.gd" id="2_shq65"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dcltb"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_fqk5s"]
+
+[sub_resource type="Resource" id="Resource_pnvnq"]
+script = ExtResource("2_shq65")
+stackable = false
+item_model = SubResource("CapsuleMesh_dcltb")
+item_sprite = SubResource("ImageTexture_fqk5s")
+quantity = 0
+item_inv_shape = Vector2(0, 0)
+weight = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ox8km"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3xrpe"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gscc8"]
+material = SubResource("StandardMaterial3D_3xrpe")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="test_item" type="RigidBody3D" groups=["Items"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_05lp4")
+item_stats = SubResource("Resource_pnvnq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ox8km")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gscc8")

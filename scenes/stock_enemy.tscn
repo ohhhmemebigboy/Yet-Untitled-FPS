@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbuprxji0bugj"]
+
+[ext_resource type="Script" path="res://scripts/Resources/stock_enemy.gd" id="1_xn2pc"]
+[ext_resource type="Script" path="res://scripts/Resources/enemy_stats.gd" id="2_1aaex"]
+[ext_resource type="PackedScene" uid="uid://br2wip2fb2tja" path="res://textures and models/gunTemp.glb" id="3_fxlld"]
+
+[sub_resource type="Resource" id="Resource_djm47"]
+script = ExtResource("2_1aaex")
+health = 0
+max_health = 100
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_utpba"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qr4du"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_umi4w"]
+material = SubResource("StandardMaterial3D_qr4du")
+
+[node name="StockEnemy" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_xn2pc")
+enemy_stats = SubResource("Resource_djm47")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_utpba")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_umi4w")
+
+[node name="gunTemp" parent="." instance=ExtResource("3_fxlld")]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0.479382, 0.272432, -0.529777)

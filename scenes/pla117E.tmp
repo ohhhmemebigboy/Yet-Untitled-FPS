@@ -1,0 +1,170 @@
+[gd_scene load_steps=14 format=3 uid="uid://jwomq7ub23ce"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_g1ui8"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/StateMachine.gd" id="2_xpu05"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/IdleState.gd" id="3_hfh4g"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/WalkingState.gd" id="4_f8kx8"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/SprintState.gd" id="5_s2waj"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/CrouchState.gd" id="6_33j8v"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/SlideState.gd" id="7_gumsp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxukg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ek5a2"]
+
+[sub_resource type="Animation" id="Animation_bo8va"]
+resource_name = "Crouch"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.599858, 0), Vector3(0, 0.1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.25, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+
+[sub_resource type="Animation" id="Animation_g4l67"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.599858, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5jjw4"]
+_data = {
+"Crouch": SubResource("Animation_bo8va"),
+"RESET": SubResource("Animation_g4l67")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bfjnj"]
+
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("Animator")]
+script = ExtResource("1_g1ui8")
+Animator = NodePath("AnimationPlayer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_oxukg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_ek5a2")
+skeleton = NodePath("../..")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.599858, 0)
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+current = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_xpu05")
+CURRENT_STATE = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("3_hfh4g")
+
+[node name="WalkingState" type="Node" parent="StateMachine"]
+script = ExtResource("4_f8kx8")
+
+[node name="SprintState" type="Node" parent="StateMachine"]
+script = ExtResource("5_s2waj")
+
+[node name="CrouchState" type="Node" parent="StateMachine"]
+script = ExtResource("6_33j8v")
+
+[node name="SlideState" type="Node" parent="StateMachine"]
+script = ExtResource("7_gumsp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5jjw4")
+}
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77418, 0)
+shape = SubResource("SphereShape3D_bfjnj")
+debug_shape_custom_color = Color(0, 1, 0, 1)

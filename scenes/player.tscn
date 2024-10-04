@@ -1,0 +1,540 @@
+[gd_scene load_steps=31 format=3 uid="uid://jwomq7ub23ce"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_g1ui8"]
+[ext_resource type="Resource" uid="uid://bls8g6sdod2sy" path="res://scripts/Resources/playerStats.tres" id="2_5a0pg"]
+[ext_resource type="PackedScene" uid="uid://c4g4mau41aabg" path="res://scenes/Weapon.tscn" id="2_281dy"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/StateMachine.gd" id="2_xpu05"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/IdleState.gd" id="3_hfh4g"]
+[ext_resource type="PackedScene" uid="uid://br2wip2fb2tja" path="res://textures and models/gunTemp.glb" id="3_isarn"]
+[ext_resource type="Script" path="res://scripts/weapon_script.gd" id="3_tgxy1"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/WalkingState.gd" id="4_f8kx8"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/SprintState.gd" id="5_s2waj"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/CrouchState.gd" id="6_33j8v"]
+[ext_resource type="Resource" uid="uid://dtjirjqh6kab6" path="res://scripts/Resources/Gun Stats/test_pistol_stats.tres" id="6_vp7dn"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/SlideState.gd" id="7_gumsp"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/JumpState.gd" id="8_h7euf"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/WallJumpState.gd" id="10_oshaw"]
+[ext_resource type="Script" path="res://scripts/StateMachineScripts/WallRunState.gd" id="11_8mkm1"]
+[ext_resource type="PackedScene" uid="uid://bdyfpg3qkkscp" path="res://scenes/slow_motion_machine.tscn" id="12_51tr5"]
+[ext_resource type="Texture2D" uid="uid://bykh0jwspuayy" path="res://textures and models/crosshair.png" id="14_kkglj"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="16_aqyl8"]
+[ext_resource type="Script" path="res://scripts/Item Scripts/inventoryscript.gd" id="19_k8lff"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxukg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ek5a2"]
+
+[sub_resource type="Animation" id="Animation_bo8va"]
+resource_name = "Crouch"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.599858, 0), Vector3(0, 0.1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.25, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+
+[sub_resource type="Animation" id="Animation_g4l67"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.599858, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShapeCast3D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.77418, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tas2o"]
+resource_name = "Slide"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.25, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.599858, 0), Vector3(0, 0.1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShapeCast3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0), Vector3(0, 1, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StateMachine/SlideState")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"finish"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5jjw4"]
+_data = {
+"Crouch": SubResource("Animation_bo8va"),
+"RESET": SubResource("Animation_g4l67"),
+"Slide": SubResource("Animation_tas2o")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bfjnj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xgmpx"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_ia4yg"]
+font_size = 44
+
+[sub_resource type="LabelSettings" id="LabelSettings_1sde6"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_na2um"]
+
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("Animator")]
+script = ExtResource("1_g1ui8")
+player_stats = ExtResource("2_5a0pg")
+Animator = NodePath("AnimationPlayer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_oxukg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_ek5a2")
+skeleton = NodePath("../..")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.599858, 0)
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+current = true
+
+[node name="Weapons" type="Node3D" parent="head/Camera3D"]
+script = ExtResource("3_tgxy1")
+stats = ExtResource("6_vp7dn")
+
+[node name="Weapon" parent="head/Camera3D/Weapons" instance=ExtResource("2_281dy")]
+transform = Transform3D(-1.09278e-08, -0.25, -1.09278e-08, 0, -1.09278e-08, 0.25, -0.25, 1.09278e-08, 4.77671e-16, 0.75, -0.35, -0.8)
+visible = false
+
+[node name="gunTemp" parent="head/Camera3D/Weapons" instance=ExtResource("3_isarn")]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0.5, -0.2, -0.7)
+
+[node name="Reload" type="Timer" parent="head/Camera3D/Weapons"]
+
+[node name="Interact" type="RayCast3D" parent="head/Camera3D"]
+transform = Transform3D(2.5, 0, 0, 0, -1.09278e-07, -2.5, 0, 2.5, -1.09278e-07, 0, 0, 0)
+collision_mask = 4
+debug_shape_custom_color = Color(0, 0.8, 0, 1)
+
+[node name="Left" type="RayCast3D" parent="head"]
+transform = Transform3D(-5.68248e-08, 1.3, 0, -1.3, -5.68248e-08, 0, 0, 0, 1.3, -0.0144031, -0.57258, 0)
+collide_with_areas = true
+debug_shape_custom_color = Color(0, 0.8, 0, 1)
+
+[node name="Right" type="RayCast3D" parent="head"]
+transform = Transform3D(-5.68248e-08, -1.3, 0, 1.3, -5.68248e-08, 0, 0, 0, 1.3, 0.0247193, -0.566894, 0.0147616)
+collide_with_areas = true
+debug_shape_custom_color = Color(0, 0.8, 0, 1)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_xpu05")
+CURRENT_STATE = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("3_hfh4g")
+
+[node name="WalkingState" type="Node" parent="StateMachine"]
+script = ExtResource("4_f8kx8")
+
+[node name="SprintState" type="Node" parent="StateMachine"]
+script = ExtResource("5_s2waj")
+
+[node name="CrouchState" type="Node" parent="StateMachine"]
+script = ExtResource("6_33j8v")
+
+[node name="SlideState" type="Node" parent="StateMachine"]
+script = ExtResource("7_gumsp")
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("8_h7euf")
+
+[node name="WallJumpState" type="Node" parent="StateMachine"]
+script = ExtResource("10_oshaw")
+
+[node name="WallRunState" type="Node" parent="StateMachine"]
+script = ExtResource("11_8mkm1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5jjw4")
+}
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77418, 0)
+shape = SubResource("SphereShape3D_bfjnj")
+debug_shape_custom_color = Color(0, 1, 0, 1)
+
+[node name="SlowMotionMachine" parent="." instance=ExtResource("12_51tr5")]
+
+[node name="Inventory" type="Control" parent="."]
+process_mode = 3
+process_priority = 1
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("19_k8lff")
+
+[node name="Background" type="ColorRect" parent="Inventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -50.0
+offset_right = 400.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.646029, 0.646029, 0.646029, 1)
+
+[node name="EquipBackground" type="ColorRect" parent="Inventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -774.0
+offset_top = -352.0
+offset_right = -415.0
+offset_bottom = 348.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.647059, 0.647059, 0.647059, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Inventory/EquipBackground"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 268.0
+offset_right = 114.0
+offset_bottom = 404.0
+
+[node name="ColorRect2" type="ColorRect" parent="Inventory/EquipBackground"]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 241.0
+offset_right = 245.0
+offset_bottom = 446.0
+
+[node name="ColorRect3" type="ColorRect" parent="Inventory/EquipBackground"]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 275.0
+offset_right = 349.0
+offset_bottom = 384.0
+
+[node name="ColorRect4" type="ColorRect" parent="Inventory/EquipBackground"]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 104.0
+offset_right = 245.0
+offset_bottom = 217.0
+
+[node name="ColorRect5" type="ColorRect" parent="Inventory/EquipBackground"]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 456.0
+offset_right = 246.0
+offset_bottom = 604.0
+
+[node name="ColorRect6" type="ColorRect" parent="Inventory/EquipBackground"]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 617.0
+offset_right = 245.0
+offset_bottom = 678.0
+
+[node name="StatsBackground" type="ColorRect" parent="Inventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 433.0
+offset_top = -302.0
+offset_right = 737.0
+offset_bottom = 338.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.647059, 0.647059, 0.647059, 1)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="TextureRect" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_kkglj")
+
+[node name="AmmoCurrent" type="Label" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = -106.0
+offset_right = 83.0
+offset_bottom = -45.0
+grow_vertical = 0
+text = "10"
+label_settings = SubResource("LabelSettings_xgmpx")
+
+[node name="AmmoTotal" type="Label" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 110.0
+offset_top = -88.0
+offset_right = 170.0
+offset_bottom = -16.0
+grow_vertical = 0
+text = "10"
+label_settings = SubResource("LabelSettings_ia4yg")
+
+[node name="Health" type="Label" parent="HUD"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -133.0
+offset_right = -42.0
+offset_bottom = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "100"
+label_settings = SubResource("LabelSettings_1sde6")
+
+[node name="Pickup UI" type="Label" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 22.0
+offset_top = 4.0
+offset_right = 157.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E to pick up"
+label_settings = SubResource("LabelSettings_na2um")
+
+[node name="PauseMenu" type="Control" parent="."]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("16_aqyl8")
+
+[node name="Resume" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -159.0
+offset_right = 100.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "Resume"
+
+[node name="Quit" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -54.0
+offset_right = 100.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "Quit"
+
+[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Quit" to="PauseMenu" method="_on_quit_pressed"]
